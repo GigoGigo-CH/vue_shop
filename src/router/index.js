@@ -2,6 +2,9 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
+import Welcome from '../components/Welcome.vue'
+import Users from '../components/user/Users.vue'
+
 
 Vue.use(VueRouter)
 
@@ -11,13 +14,20 @@ Vue.use(VueRouter)
 
 const router = new VueRouter({
   routes: [
-    {path: '/', redirect: '/Login' },
+    {path: '/', redirect: '/login' },
     {path: '/login',component: Login },
-    {path: '/home',component: Home }
+    {
+      path: '/home',component: Home,redirect: '/welcome' ,
+      children: [
+        {path: '/welcome', component: Welcome },
+        {path: '/users', component: Users} 
+      ] 
+      
+    }
   ]
 })
 
-//挂在路由导航守卫
+//挂载路由导航守卫
 router.beforeEach((to, from, next) => {
   //to 将要访问的路径
   //from 代表从何跳转而来
